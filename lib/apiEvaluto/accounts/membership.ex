@@ -1,12 +1,7 @@
 defmodule ApiEvaluto.Accounts.Membership do
-  use Ecto.Schema
-  import Ecto.Changeset
-
-  alias ApiEvaluto.Accounts.{Tenant, Group, User}
-  
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
-
+  use ApiEvaluto.Schema 
+  alias ApiEvaluto.Accounts.{Group, User}
+    
   schema "memberships" do
     belongs_to :tenant, Tenant, foreign_key: :tenant_id, type: :binary_id
     belongs_to :group, Group, foreign_key: :group_id, type: :binary_id

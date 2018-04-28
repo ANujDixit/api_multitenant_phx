@@ -1,13 +1,8 @@
 defmodule ApiEvaluto.Accounts.Tenant do
-  use Ecto.Schema
-  import Ecto.Changeset
-  
+  use ApiEvaluto.Schema  
   alias ApiEvaluto.Repo
-  alias ApiEvaluto.Accounts.{Tenant, User, Group}
+  alias ApiEvaluto.Accounts.{User, Group}
   
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
-
   schema "tenants" do
     field :code, :string
     field :name, :string

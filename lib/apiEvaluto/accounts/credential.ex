@@ -1,12 +1,7 @@
 defmodule ApiEvaluto.Accounts.Credential do
-  use Ecto.Schema
-  import Ecto.Changeset
-
-  alias Comeonin.Bcrypt
-  alias ApiEvaluto.Accounts.{Tenant, User}
-  
-  @primary_key {:id, :binary_id, autogenerate: true}
-  @foreign_key_type :binary_id
+  use ApiEvaluto.Schema  
+  import Comeonin.Bcrypt, only: [hashpwsalt: 1]
+  alias ApiEvaluto.Accounts.User
 
   schema "credentials" do
 
@@ -27,11 +22,15 @@ defmodule ApiEvaluto.Accounts.Credential do
     |> validate_required([:auth_type, :email, :password_hash])
     |> unique_constraint(:email, name: :tenant_user)
     |> put_password_hash()  
-  end
+  end 
 
-  defp put_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, password_hash: Bcrypt.hashpwsalt(password))
+  defp put_password_hash(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: pass}}
+        ->
+          put_change(changeset, :password_hash, hashpwsalt(pass))
+      _ ->
+          changeset
+    end
   end
-
-  defp put_password_hash(changeset), do: changeset
 end

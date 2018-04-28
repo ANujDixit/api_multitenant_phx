@@ -7,6 +7,11 @@ defmodule ApiEvalutoWeb.Router do
 
   scope "/api", ApiEvalutoWeb do
     pipe_through :api
+    post "/register", RegistrationController, :create
+    
+    scope "/companies/:company_slug" do
+      post "/authenticate", AuthenticationController, :create         
+    end
     
     resources "/tenants", TenantController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]

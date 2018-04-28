@@ -1,4 +1,4 @@
-defmodule ApiEvalutoWeb.TenantController do
+defmodule ApiEvalutoWeb.RegistrationController do
   use ApiEvalutoWeb, :controller
 
   alias ApiEvaluto.Accounts
@@ -6,37 +6,11 @@ defmodule ApiEvalutoWeb.TenantController do
 
   action_fallback ApiEvalutoWeb.FallbackController
 
-  def index(conn, _params) do
-    tenants = Accounts.list_tenants()
-    render(conn, "index.json", tenants: tenants)
+  def create(conn, %{"registration" => registration_params}) do
+    with  {:ok, %Tenant{} = tenant} <- Accounts.register(registration_params),
+          {:ok, token, _claims} <- Guardian.encode_and_sign(tenant) do
+            conn |> render("jwt.json", jwt: token)
+    end    
   end
-
-  def create(conn, %{"tenant" => tenant_params}) do
-    with {:ok, %Tenant{} = tenant} <- Accounts.create_tenant(tenant_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", tenant_path(conn, :show, tenant))
-      |> render("show.json", tenant: tenant)
-    end
-  end
-
-  def show(conn, %{"id" => id}) do
-    tenant = Accounts.get_tenant!(id)
-    render(conn, "show.json", tenant: tenant)
-  end
-
-  def update(conn, %{"id" => id, "tenant" => tenant_params}) do
-    tenant = Accounts.get_tenant!(id)
-
-    with {:ok, %Tenant{} = tenant} <- Accounts.update_tenant(tenant, tenant_params) do
-      render(conn, "show.json", tenant: tenant)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    tenant = Accounts.get_tenant!(id)
-    with {:ok, %Tenant{}} <- Accounts.delete_tenant(tenant) do
-      send_resp(conn, :no_content, "")
-    end
-  end
+  
 end
