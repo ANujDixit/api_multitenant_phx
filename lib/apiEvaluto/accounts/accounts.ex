@@ -57,7 +57,6 @@ defmodule ApiEvaluto.Accounts do
     Repo.delete(user)
   end
 
-
   alias ApiEvaluto.Accounts.Group
 
   def list_groups(tenant) do
@@ -87,6 +86,55 @@ defmodule ApiEvaluto.Accounts do
 
   def delete_group(%Group{} = group) do
     Repo.delete(group)
+  end
+
+
+  alias ApiEvaluto.Accounts.Credential
+ 
+  def list_credentials do
+    Repo.all(Credential)
+  end
+
+  def get_credential!(id), do: Repo.get!(Credential, id)
+
+  def create_credential(attrs \\ %{}) do
+    %Credential{}
+    |> Credential.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_credential(%Credential{} = credential, attrs) do
+    credential
+    |> Credential.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_credential(%Credential{} = credential) do
+    Repo.delete(credential)
+  end
+
+  alias ApiEvaluto.Accounts.Membership
+
+  def list_memberships do
+    Repo.all(Membership)
+  end
+
+  def get_membership!(id), do: Repo.get!(Membership, id)
+ 
+  def create_membership(attrs \\ %{}) do
+    %Membership{}
+    |> Membership.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_membership(%Membership{} = membership, attrs) do
+    membership
+    |> Membership.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_membership(%Membership{} = membership) do
+    Repo.delete(membership)
   end
 
 end
