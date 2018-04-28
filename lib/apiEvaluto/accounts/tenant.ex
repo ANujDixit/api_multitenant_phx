@@ -3,7 +3,7 @@ defmodule ApiEvaluto.Accounts.Tenant do
   import Ecto.Changeset
   
   alias ApiEvaluto.Repo
-  alias ApiEvaluto.Accounts.{Tenant, User}
+  alias ApiEvaluto.Accounts.{Tenant, User, Group}
   
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -14,6 +14,7 @@ defmodule ApiEvaluto.Accounts.Tenant do
     field :slug, :string
     
     has_many :users, User
+    has_many :groups, Group
 
     timestamps()
   end

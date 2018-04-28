@@ -42,7 +42,8 @@ defmodule ApiEvaluto.Accounts do
   end  
 
   def create_user(tenant, attrs \\ %{}) do
-    Ecto.build_assoc(tenant, :users, attrs)
+    Ecto.build_assoc(tenant, :users)
+    |> User.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -66,10 +67,14 @@ defmodule ApiEvaluto.Accounts do
     |> Repo.all()
   end
 
-  def get_group!(id), do: Repo.get!(Group, id)
+  def get_group!(tenant, id) do 
+    Group
+    |> where([g], g.tenant_id == ^tenant.id)
+    |> Repo.get!(id)
+  end  
  
-  def create_group(attrs \\ %{}) do
-    %Group{}
+  def create_group(tenant, attrs \\ %{}) do
+    Ecto.build_assoc(tenant, :groups)
     |> Group.changeset(attrs)
     |> Repo.insert()
   end
