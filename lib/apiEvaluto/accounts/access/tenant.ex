@@ -11,6 +11,8 @@ defmodule ApiEvaluto.Accounts.Access.Tenant do
 
       def get_tenant!(id), do: Repo.get!(Tenant, id)
 
+      def get_tenant_by_code(code), do: Repo.get_by(Tenant, code: code)
+
       def create_tenant(attrs \\ %{}) do
         %Tenant{}
         |> Tenant.changeset(attrs)

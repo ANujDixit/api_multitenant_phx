@@ -6,12 +6,16 @@ defmodule ApiEvalutoWeb.AuthenticationController do
 
   action_fallback ApiEvalutoWeb.FallbackController
 
-  def create(conn, %{"tenant" => tenant_params}) do
-    with {:ok, %Tenant{} = tenant} <- Accounts.create_tenant(tenant_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", tenant_path(conn, :show, tenant))
-      |> render("show.json", tenant: tenant)
+  def create(conn, %{"email" => email, "password" => password, "tenant_code" => code}) do
+    with %Tenant{} = tenant <- Accounts.get_tenant_by_code(code) do    
+      case Accounts.token_sign_in(tenant, email, password) do
+        {:ok, token, _claims} ->
+          conn |> render("jwt.json", jwt: token)
+        _ ->
+          {:error, :unauthorized}
+      end
+    else 
+      _ -> {:error, :tenant_not_found}
     end
   end
   

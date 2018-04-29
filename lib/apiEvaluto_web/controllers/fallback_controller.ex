@@ -23,4 +23,10 @@ defmodule ApiEvalutoWeb.FallbackController do
     |> put_status(:unauthorized)
     |> json(%{error: "Login error"})
   end
+
+  def call(conn, {:error, :tenant_not_found}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{error: "Tenant Not found"})
+  end
 end

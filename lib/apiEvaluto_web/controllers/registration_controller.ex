@@ -3,13 +3,15 @@ defmodule ApiEvalutoWeb.RegistrationController do
 
   alias ApiEvaluto.Guardian 
   alias ApiEvaluto.Accounts
-  alias ApiEvaluto.Accounts.Tenant  
+  alias ApiEvaluto.Accounts.{Tenant, User}  
 
   action_fallback ApiEvalutoWeb.FallbackController 
 
   def create(conn, %{"registration" => registration_params}) do
-    with  {:ok, %Tenant{} = tenant} <- Accounts.register(registration_params),
-          {:ok, token, _claims} <- Guardian.encode_and_sign(tenant) do
+    with  {:ok, %Tenant{} = tenant, %User{} = user} <- Accounts.register(registration_params),
+          {:ok, token, _claims} <- Guardian.encode_and_sign(user, 
+                                                           %{tenant_slug: tenant.slug, 
+                                                             tenant_code: tenant.code}) do
             conn |> render("jwt.json", jwt: token)
     end    
   end
