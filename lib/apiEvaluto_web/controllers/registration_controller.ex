@@ -1,8 +1,9 @@
 defmodule ApiEvalutoWeb.RegistrationController do
   use ApiEvalutoWeb, :controller
 
+  alias ApiEvaluto.Guardian 
   alias ApiEvaluto.Accounts
-  alias ApiEvaluto.Accounts.Tenant
+  alias ApiEvaluto.Accounts.Tenant  
 
   action_fallback ApiEvalutoWeb.FallbackController
 

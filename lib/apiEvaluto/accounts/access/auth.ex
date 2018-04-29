@@ -2,7 +2,11 @@ defmodule ApiEvaluto.Accounts.Access.Auth do
   defmacro __using__(_) do
     quote do
       import Ecto.Query, warn: false
+      import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+      
       alias ApiEvaluto.Repo
+      alias ApiEvaluto.Guardian   
+      alias ApiEvaluto.Accounts.{User, Credential}
       
       def token_sign_in(tenant, email, password) do
         case email_password_auth(tenant, email, password) do

@@ -1,4 +1,4 @@
-defmodule ApiEvaluto.Accounts.Access.Group do
+defmodule ApiEvaluto.Accounts.Access.User do
   defmacro __using__(_) do
     quote do
       import Ecto.Query, warn: false

@@ -12,6 +12,6 @@ defmodule ApiEvaluto.Repo.Migrations.CreateGroups do
     end
 
     create index(:groups, [:tenant_id])
-    create unique_index(:groups, [:name ,:tenant_id])
+    create unique_index(:groups, [:tenant_id, :name], name: :tenant_name)
   end
 end

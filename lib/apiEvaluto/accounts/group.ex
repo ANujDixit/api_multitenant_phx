@@ -17,14 +17,7 @@ defmodule ApiEvaluto.Accounts.Group do
     group
     |> cast(attrs, [:name, :active])
     |> validate_required([:name, :active])
-  end
-
-  def registration_changeset(group, attrs) do
-    group
-    |> cast(attrs, [:tenant_id])
-    |> validate_required([:tenant_id])
-    |> make_first_user_as_owner()
-    |> unique_constraint(:name, name: :groups_name_company_id_index)
+    |> unique_constraint(:name, name: :tenant_name)
   end
 
 end

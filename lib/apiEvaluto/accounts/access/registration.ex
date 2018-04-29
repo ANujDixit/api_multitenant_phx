@@ -3,20 +3,21 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
     quote do
       import Ecto.Query, warn: false
       alias ApiEvaluto.Repo        
-      alias ApiEvaluto.Accounts.Registration
+      alias ApiEvaluto.Accounts.{Registration, Tenant, Group, User, Credential, Membership}
 
       def register(attrs \\ %{}) do
         changeset = Registration.changeset(%Registration{}, attrs)  
         if changeset.valid? do
           case Repo.transaction(to_multi(attrs)) do
-            {:ok, _} ->
-              redirect conn, to: registration_path(conn, :new)
+            {:ok, %{tenant: tenant}} ->
+              {:ok, tenant}
             {:error, _operation, repo_changeset, _changes} ->
-              changeset = copy_errors(repo_changeset, changeset)
-              %{:error, %{changeset | action: :insert}}
+              changeset = %{copy_errors(repo_changeset, changeset) | action: :insert}
+              {:error, changeset}
           end
         else
-          %{:error, %{changeset | action: :insert}}
+          changeset = %{changeset | action: :insert}
+          {:error, changeset}
         end
       end
 
@@ -35,7 +36,37 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
 
       defp group_changeset(changes) do
         changes.tenant
-        |> Ecto.build_assoc(:groups, with: &Group.registration_changeset/2)
+        |> Ecto.build_assoc(:groups)
+        |> Group.registration_changeset(%{name: "Owner", active: 1})
+      end
+
+      defp user_changeset(%{"first_name" => first_name, "last_name" => last_name}, changes) do
+        changes.tenant
+        |> Ecto.build_assoc(:users) 
+        |> User.changeset(%{first_name: first_name, last_name: last_name})
+      end
+
+      defp credential_changeset(attrs, changes) do       
+        changes.tenant
+        |> Ecto.build_assoc(:credentials)        
+        |> Ecto.Changeset.change()
+        |> Ecto.Changeset.put_assoc(:user, changes.user)
+        |> Credential.changeset(Map.put(attrs, "auth_type", 1))  
+      end
+      
+      defp membership_changeset(changes) do
+        changes.tenant
+        |> Ecto.build_assoc(:memberships)
+        |> Ecto.Changeset.change()
+        |> Ecto.Changeset.put_assoc(:group, changes.group)
+        |> Ecto.Changeset.put_assoc(:user, changes.user)
+        |> Membership.changeset(%{})  
+      end
+
+      defp copy_errors(from, to) do
+        Enum.reduce from.errors, to, fn {field, {msg, additional}}, acc ->
+          Ecto.Changeset.add_error(acc, field, msg, additional: additional)
+        end
       end
         
     end
