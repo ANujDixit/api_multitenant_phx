@@ -18,8 +18,8 @@ defmodule ApiEvaluto.Accounts.Credential do
 
   def changeset(credential, attrs) do
     credential
-    |> cast(attrs, [:auth_type, :email, :password_hash])
-    |> validate_required([:auth_type, :email, :password_hash])
+    |> cast(attrs, [:auth_type, :email, :password])
+    |> validate_required([:auth_type, :email, :password])
     |> unique_constraint(:email, name: :tenant_user)
     |> put_password_hash()  
   end 

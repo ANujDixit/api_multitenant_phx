@@ -5,7 +5,7 @@ defmodule ApiEvalutoWeb.RegistrationController do
   alias ApiEvaluto.Accounts
   alias ApiEvaluto.Accounts.Tenant  
 
-  action_fallback ApiEvalutoWeb.FallbackController
+  action_fallback ApiEvalutoWeb.FallbackController 
 
   def create(conn, %{"registration" => registration_params}) do
     with  {:ok, %Tenant{} = tenant} <- Accounts.register(registration_params),

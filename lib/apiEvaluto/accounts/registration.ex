@@ -3,7 +3,7 @@ defmodule ApiEvaluto.Accounts.Registration do
   import Ecto.Changeset
 
   embedded_schema do
-    field :company_name, :string
+    field :tenant_name, :string
     field :first_name, :string
     field :last_name, :string
     field :email, :string
@@ -13,8 +13,8 @@ defmodule ApiEvaluto.Accounts.Registration do
 
   def changeset(registration, attrs) do
     registration
-    |> cast(attrs, [:tenant_name, :first_name, :last_name, :email, :password])
-    |> validate_required([:tenant_name, :first_name, :last_name, :email, :password])
+    |> cast(attrs, [:tenant_name, :first_name, :last_name, :email, :password, :password_confirmation])
+    |> validate_required([:tenant_name, :first_name, :last_name, :email, :password, :password_confirmation])
     |> validate_length(:tenant_name, max: 30)
     |> validate_length(:first_name, max: 30)
     |> validate_format(:first_name, ~r/^[A-z]+$/)

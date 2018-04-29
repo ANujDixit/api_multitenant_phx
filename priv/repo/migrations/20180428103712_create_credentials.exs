@@ -4,6 +4,7 @@ defmodule ApiEvaluto.Repo.Migrations.CreateCredentials do
   def change do
     create table(:credentials, primary_key: false) do
       add :id, :binary_id, primary_key: true
+      add :auth_type, :integer, default: 0
       add :email, :string
       add :password_hash, :string
       add :tenant_id, references(:tenants, on_delete: :delete_all, type: :binary_id), null: false

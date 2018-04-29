@@ -37,7 +37,7 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
       defp group_changeset(changes) do
         changes.tenant
         |> Ecto.build_assoc(:groups)
-        |> Group.registration_changeset(%{name: "Owner", active: 1})
+        |> Group.changeset(%{name: "Owner", active: true})
       end
 
       defp user_changeset(%{"first_name" => first_name, "last_name" => last_name}, changes) do
