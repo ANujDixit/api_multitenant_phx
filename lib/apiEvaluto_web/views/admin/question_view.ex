@@ -16,6 +16,7 @@ defmodule ApiEvalutoWeb.Admin.QuestionView do
       type: question.type,
       explanation: question.explanation,
       choices: render_many(question.choices, __MODULE__, "choice.json", as: :choice)
+               
     }
   end
   
