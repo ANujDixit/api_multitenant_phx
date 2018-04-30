@@ -19,10 +19,10 @@ defmodule ApiEvalutoWeb.Router do
     post "/authenticate", AuthenticationController, :create        
     
   end
-
-  scope "/api/admin", ApiEvalutoWeb.Admin do
+  
+  scope "/api/superadmin", ApiEvalutoWeb do
     pipe_through [:api, :jwt_authenticated_admin]
-
+    
     resources "/tenants", TenantController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]
     resources "/groups", GroupController, except: [:new, :edit]
@@ -30,7 +30,13 @@ defmodule ApiEvalutoWeb.Router do
     resources "/memberships", MembershipController, except: [:new, :edit]
     resources "/user_types", UserTypeController, except: [:new, :edit]
     resources "/access_keys", AccessKeyController, except: [:new, :edit]
+  end
 
-   
+  scope "/api/admin", ApiEvalutoWeb.Admin do
+    pipe_through [:api, :jwt_authenticated_admin]
+    
+    resources "/questions", QuestionController, except: [:new, :edit]
+
+ 
   end
 end

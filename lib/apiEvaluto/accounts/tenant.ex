@@ -2,6 +2,7 @@ defmodule ApiEvaluto.Accounts.Tenant do
   use ApiEvaluto.Schema  
   alias ApiEvaluto.Repo
   alias ApiEvaluto.Accounts.{Tenant, User, Group, Membership, Credential, UserType, AccessKey}
+  alias ApiEvaluto.Library.Question
   
   schema "tenants" do
     field :code, :string
@@ -14,6 +15,8 @@ defmodule ApiEvaluto.Accounts.Tenant do
     has_many :credentials, Credential
     has_many :user_types, UserType
     has_many :access_keys, AccessKey
+    
+    has_many :questions, Question
 
     timestamps()
   end
