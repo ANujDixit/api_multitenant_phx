@@ -7,8 +7,7 @@ defmodule ApiEvalutoWeb.Router do
   end
 
   pipeline :jwt_authenticated_admin do
-    plug Guardian.AuthPipeline
-    plug ApiEvaluto.Plug.LoadTenant
+    plug Guardian.AuthPipeline   
     plug ApiEvaluto.Plug.EnsureAdmin
   end
 
