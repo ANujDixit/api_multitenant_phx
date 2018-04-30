@@ -5,21 +5,21 @@ defmodule ApiEvaluto.Accounts.Access.Group do
         alias ApiEvaluto.Repo            
         alias ApiEvaluto.Accounts.Group
 
-        def list_groups(tenant) do
+        def list_groups(resource) do
             Group
-            |> where([g], g.tenant_id == ^tenant.id)
+            |> where([g], g.tenant_id == ^resource.tenant.id)
             |> order_by(desc: :updated_at)
             |> Repo.all()
         end
 
-        def get_group!(tenant, id) do 
+        def get_group!(resource, id) do 
             Group
-            |> where([g], g.tenant_id == ^tenant.id)
+            |> where([g], g.tenant_id == ^resource.tenant.id)
             |> Repo.get!(id)
         end  
         
-        def create_group(tenant, attrs \\ %{}) do
-            Ecto.build_assoc(tenant, :groups)
+        def create_group(resource, attrs \\ %{}) do
+            Ecto.build_assoc(resource.tenant, :groups)
             |> Group.changeset(attrs)
             |> Repo.insert()
         end

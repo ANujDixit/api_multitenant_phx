@@ -1,6 +1,6 @@
-defmodule ApiEvalutoWeb.GroupView do
+defmodule ApiEvalutoWeb.Admin.GroupView do
   use ApiEvalutoWeb, :view
-  alias ApiEvalutoWeb.GroupView
+  alias ApiEvalutoWeb.Admin.GroupView
 
   def render("index.json", %{groups: groups}) do
     %{data: render_many(groups, GroupView, "group.json")}

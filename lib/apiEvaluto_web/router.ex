@@ -24,7 +24,7 @@ defmodule ApiEvalutoWeb.Router do
     
     resources "/tenants", TenantController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]
-    resources "/groups", GroupController, except: [:new, :edit]
+    
     resources "/credentials", CredentialController, except: [:new, :edit]
     resources "/memberships", MembershipController, except: [:new, :edit]
     resources "/user_types", UserTypeController, except: [:new, :edit]
@@ -35,6 +35,7 @@ defmodule ApiEvalutoWeb.Router do
     pipe_through [:api, :jwt_authenticated_admin]
     
     resources "/questions", QuestionController, except: [:new, :edit]
+    resources "/groups", GroupController, except: [:new, :edit]
 
  
   end
