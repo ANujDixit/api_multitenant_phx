@@ -1,4 +1,4 @@
-defmodule ApiEvalutoWeb.UserController do
+defmodule ApiEvalutoWeb.Admin.UserController do
   use ApiEvalutoWeb, :controller
 
   alias ApiEvaluto.Accounts

@@ -4,8 +4,6 @@ defmodule ApiEvaluto.Guardian.AuthPipeline do
                                 error_handler: ApiEvaluto.Guardian.AuthErrorHandler
   
     plug Guardian.Plug.VerifyHeader, realm: "Bearer"
-    plug Guardian.Plug.EnsureAuthenticated    
+    plug Guardian.Plug.EnsureAuthenticated
     plug Guardian.Plug.LoadResource
-    plug ApiEvaluto.Plug.LoadTenant
-    plug ApiEvaluto.Plug.EnsureAdmin
 end

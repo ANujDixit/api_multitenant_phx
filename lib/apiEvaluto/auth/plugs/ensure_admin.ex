@@ -6,7 +6,8 @@ defmodule ApiEvaluto.Plug.EnsureAdmin do
     def init(options), do: options
   
     def call(conn, _opts) do      
-      if ApiEvaluto.Guardian.Plug.current_resource(conn).user_type.name == "Admin" do        
+      resource = ApiEvaluto.Guardian.Plug.current_resource(conn)
+      if resource && resource.tenant && resource.user && resource.user_type && resource.user_type == "Admin" do        
         conn        
       else      
         conn   

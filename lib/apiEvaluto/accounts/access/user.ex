@@ -3,7 +3,7 @@ defmodule ApiEvaluto.Accounts.Access.User do
     quote do
       import Ecto.Query, warn: false
       alias ApiEvaluto.Repo            
-      alias ApiEvaluto.Accounts.{User, UserType}
+      alias ApiEvaluto.Accounts.{Tenant, User, UserType}
 
       def list_users(tenant) do
         User
@@ -16,14 +16,17 @@ defmodule ApiEvaluto.Accounts.Access.User do
         User
         |> where([u], u.tenant_id == ^tenant.id)
         |> Repo.get!(id)
-      end        
-
-      def load_user_with_tenant(user_id) do   
-        User                             
-        |> where([u], u.id == ^user_id) 
-        |> preload([:tenant, :user_type])              
-        |> Repo.one()
+      end     
+      
+      def load_user_tenant_user_type(user_id) do   
+        user_query = 
+          from u in User, where: u.id == ^user_id, 
+          join: t in Tenant, on: u.tenant_id == t.id,
+          join: ut in UserType, on: u.user_type_id == ut.id,
+          select: %{user: u, tenant: t, user_type: ut.name}
+        Repo.one(user_query)  
       end
+      
 
       def create_user(tenant, attrs \\ %{}) do
         Ecto.build_assoc(tenant, :users)

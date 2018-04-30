@@ -1,6 +1,6 @@
-defmodule ApiEvalutoWeb.UserView do
+defmodule ApiEvalutoWeb.Admin.UserView do
   use ApiEvalutoWeb, :view
-  alias ApiEvalutoWeb.UserView
+  alias ApiEvalutoWeb.Admin.UserView
 
   def render("index.json", %{users: users}) do
     %{data: render_many(users, UserView, "user.json")}

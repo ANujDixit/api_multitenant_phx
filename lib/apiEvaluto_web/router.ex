@@ -6,8 +6,10 @@ defmodule ApiEvalutoWeb.Router do
     plug :accepts, ["json"]
   end
 
-  pipeline :jwt_authenticated do
+  pipeline :jwt_authenticated_admin do
     plug Guardian.AuthPipeline
+    plug ApiEvaluto.Plug.LoadTenant
+    plug ApiEvaluto.Plug.EnsureAdmin
   end
 
   scope "/api", ApiEvalutoWeb do
@@ -18,8 +20,8 @@ defmodule ApiEvalutoWeb.Router do
     
   end
 
-  scope "/api/admin", ApiEvalutoWeb do
-    pipe_through [:api, :jwt_authenticated]
+  scope "/api/admin", ApiEvalutoWeb.Admin do
+    pipe_through [:api, :jwt_authenticated_admin]
 
     resources "/tenants", TenantController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]

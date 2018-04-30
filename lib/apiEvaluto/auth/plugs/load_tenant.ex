@@ -1,17 +1,15 @@
 defmodule ApiEvaluto.Plug.LoadTenant do
     import Plug.Conn
-    alias ApiEvaluto.Accounts
-    alias ApiEvaluto.Accounts.Tenant
   
     def init(options), do: options
   
     def call(conn, _opts) do
-      user = ApiEvaluto.Guardian.Plug.current_resource(conn)    
-      if user do
-        tenant = user.tenant
-      else
-        tenant = nil  
-      end            
+      tenant = 
+        case ApiEvaluto.Guardian.Plug.current_resource(conn)  do
+        resource when not is_nil(resource) -> resource.tenant
+        _ -> nil
+        end
+              
       assign(conn, :tenant, tenant)
     end
 end
