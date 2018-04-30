@@ -3,7 +3,7 @@ defmodule ApiEvaluto.Repo.Migrations.CreateMemberships do
 
   def change do
     create table(:memberships, primary_key: false) do
-      add :id, :binary_id, primary_key: true
+      add :id, :binary_id, primary_key: true      
       add :tenant_id, references(:tenants, on_delete: :delete_all, type: :binary_id), null: false
       add :user_id, references(:users, on_delete: :delete_all, type: :binary_id), null: false
       add :group_id, references(:groups, on_delete: :delete_all, type: :binary_id), null: false

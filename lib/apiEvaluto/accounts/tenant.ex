@@ -1,7 +1,7 @@
 defmodule ApiEvaluto.Accounts.Tenant do
   use ApiEvaluto.Schema  
   alias ApiEvaluto.Repo
-  alias ApiEvaluto.Accounts.{Tenant, User, Group, Membership, Credential}
+  alias ApiEvaluto.Accounts.{Tenant, User, Group, Membership, Credential, UserType, AccessKey}
   
   schema "tenants" do
     field :code, :string
@@ -12,6 +12,8 @@ defmodule ApiEvaluto.Accounts.Tenant do
     has_many :groups, Group
     has_many :memberships, Membership
     has_many :credentials, Credential
+    has_many :user_types, UserType
+    has_many :access_keys, AccessKey
 
     timestamps()
   end

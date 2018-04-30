@@ -7,4 +7,5 @@ defmodule ApiEvaluto.Guardian.AuthPipeline do
     plug Guardian.Plug.EnsureAuthenticated    
     plug Guardian.Plug.LoadResource
     plug ApiEvaluto.Plug.LoadTenant
+    plug ApiEvaluto.Plug.EnsureAdmin
 end

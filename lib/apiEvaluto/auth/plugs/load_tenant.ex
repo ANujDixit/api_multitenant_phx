@@ -8,11 +8,10 @@ defmodule ApiEvaluto.Plug.LoadTenant do
     def call(conn, _opts) do
       user = ApiEvaluto.Guardian.Plug.current_resource(conn)    
       if user do
-        tenant = Accounts.get_tenant!(user.tenant_id)
+        tenant = user.tenant
       else
         tenant = nil  
-      end      
-      
+      end            
       assign(conn, :tenant, tenant)
     end
 end

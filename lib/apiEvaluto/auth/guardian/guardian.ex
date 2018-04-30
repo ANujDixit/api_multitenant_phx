@@ -13,14 +13,18 @@ defmodule ApiEvaluto.Guardian do
     end
   
     def resource_from_claims(claims) do
-      id = claims["sub"]
-      code = claims["tenant_code"]
+
+      tenant_code = claims["tenant_code"]
+      user_id = claims["sub"]  
       
-      resource =  with %Tenant{} = tenant <- Accounts.get_tenant_by_code(code) do 
-                    Accounts.get_user!(tenant, id)
-                  else
-                    _ -> nil  
-                  end        
+      resource =  case Accounts.load_user_with_tenant(user_id) do
+                    user when not is_nil(user) -> user
+                    _ -> nil        
+                  end
+      if resource.tenant.code != tenant_code do
+        reosurce = nil
+      end      
+      
       {:ok,  resource}
     end
   

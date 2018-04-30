@@ -26,6 +26,9 @@ defmodule ApiEvalutoWeb.Router do
     resources "/groups", GroupController, except: [:new, :edit]
     resources "/credentials", CredentialController, except: [:new, :edit]
     resources "/memberships", MembershipController, except: [:new, :edit]
+    resources "/user_types", UserTypeController, except: [:new, :edit]
+    resources "/access_keys", AccessKeyController, except: [:new, :edit]
+
    
   end
 end
