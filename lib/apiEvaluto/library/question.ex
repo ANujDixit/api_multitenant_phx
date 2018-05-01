@@ -17,11 +17,20 @@ defmodule ApiEvaluto.Library.Question do
     timestamps()
   end
 
-  def changeset(question, attrs) do
+  def changeset(question, attrs, tenant) do    
+    question
+    |> cast(attrs, [:title, :type, :explanation])
+    |> validate_required([:title, :type])
+    |> unique_constraint(:title, name: :tenant_question_title)
+    |> cast_assoc(:choices, with: &ApiEvaluto.Library.Choice.changeset(&1, &2, tenant))
+  end
+  
+  def changeset(question, attrs) do    
     question
     |> cast(attrs, [:title, :type, :explanation])
     |> validate_required([:title, :type])
     |> unique_constraint(:title, name: :tenant_question_title)
     |> cast_assoc(:choices)
   end
+
 end

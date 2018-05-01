@@ -15,9 +15,17 @@ defmodule ApiEvaluto.Library.Choice do
     timestamps()
   end
   
-  def changeset(choice, attrs) do
+  def changeset(choice, attrs, tenant) do      
     choice
-    |> cast(attrs, [:title, :is_correct, :seq, :tenant_id])
-    |> validate_required([:title, :seq, :tenant_id])
+    |> cast(attrs, [:title, :is_correct, :seq])
+    |> put_assoc(:tenant, tenant)
+    |> validate_required([:title, :seq])
   end
+  
+  def changeset(choice, attrs) do      
+    choice
+    |> cast(attrs, [:title, :is_correct, :seq])
+    |> validate_required([:title, :seq])
+  end
+
 end

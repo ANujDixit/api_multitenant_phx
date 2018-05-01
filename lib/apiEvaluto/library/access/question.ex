@@ -21,15 +21,8 @@ defmodule ApiEvaluto.Library.Access.Question do
       end  
 
       def create_question(resource, attrs \\ %{}) do
-        attrs =
-          case attrs["choices"] do
-            [] -> attrs
-            _  -> Map.put(attrs, "choices", attrs["choices"] 
-                  |> Enum.map(fn(x) -> Map.put(x, "tenant_id", resource.tenant.id ) end))
-          end
-       
         Ecto.build_assoc(resource.tenant, :questions)
-        |> Question.changeset(attrs)
+        |> Question.changeset(attrs, resource.tenant)
         |> Repo.insert()
       end
 
