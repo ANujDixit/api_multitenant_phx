@@ -20,7 +20,7 @@ defmodule ApiEvaluto.Mixfile do
   def application do
     [
       mod: {ApiEvaluto.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :bamboo]
     ]
   end
 
@@ -44,6 +44,7 @@ defmodule ApiEvaluto.Mixfile do
       {:bcrypt_elixir, "~> 0.12"},
       {:cors_plug, "~> 1.5"},
       {:slugger, "~> 0.2"},
+      {:bamboo, github: "thoughtbot/bamboo"},
     ]
   end
 

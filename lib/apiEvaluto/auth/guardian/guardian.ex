@@ -1,7 +1,6 @@
 defmodule ApiEvaluto.Guardian do
     use Guardian, otp_app: :apiEvaluto
-    alias ApiEvaluto.Accounts
-    alias ApiEvaluto.Accounts.Tenant
+    alias ApiEvaluto.Accounts   
   
     def subject_for_token(user, _claims) do
       sub = to_string(user.id)

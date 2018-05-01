@@ -9,6 +9,10 @@ config :apiEvaluto, ApiEvalutoWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+#configure Bamboo
+config :apiEvaluto, ApiEvaluto.Notifications.Mailer,
+  adapter: Bamboo.LocalAdapter
+
 # Configure your database
 config :apiEvaluto, ApiEvaluto.Repo,
   adapter: Ecto.Adapters.Postgres,

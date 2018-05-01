@@ -6,6 +6,10 @@ defmodule ApiEvalutoWeb.Router do
     plug :accepts, ["json"]
   end
 
+  if Mix.env == :dev do
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  end
+
   pipeline :jwt_authenticated_admin do
     plug Guardian.AuthPipeline   
     plug ApiEvaluto.Plug.EnsureAdmin

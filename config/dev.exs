@@ -44,3 +44,7 @@ config :apiEvaluto, ApiEvaluto.Repo,
   database: "apievaluto_dev",
   hostname: "localhost",
   pool_size: 10
+
+#configure Bamboo
+config :apiEvaluto, ApiEvaluto.Notifications.Mailer,
+  adapter: Bamboo.LocalAdapter
