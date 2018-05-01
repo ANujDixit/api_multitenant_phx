@@ -21,6 +21,8 @@ defmodule ApiEvaluto.Guardian do
           user when not is_nil(user) -> user
            _ -> nil        
         end
+        
+      IO.inspect resource  
                   
       if resource && resource.tenant && resource.tenant.code != tenant_code do
         resource = nil

@@ -1,7 +1,7 @@
 defmodule ApiEvalutoWeb.AuthenticationController do
   use ApiEvalutoWeb, :controller
 
-  alias ApiEvaluto.Accounts
+  alias ApiEvaluto.{Accounts, Notifications}
   alias ApiEvaluto.Accounts.Tenant
 
   action_fallback ApiEvalutoWeb.FallbackController
@@ -10,6 +10,7 @@ defmodule ApiEvalutoWeb.AuthenticationController do
     with %Tenant{} = tenant <- Accounts.get_tenant_by_code(code) do    
       case Accounts.token_sign_in(tenant, email, password) do
         {:ok, token, _claims} ->
+          Notifications.send_account_verification_email(email, "www.google.com")
           conn |> render("jwt.json", jwt: token)
         _ ->
           {:error, :unauthorized}

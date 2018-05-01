@@ -3,7 +3,7 @@ defmodule ApiEvaluto.Accounts.Access.User do
     quote do
       import Ecto.Query, warn: false
       alias ApiEvaluto.Repo            
-      alias ApiEvaluto.Accounts.{Tenant, User, UserType}
+      alias ApiEvaluto.Accounts.{Tenant, User, UserType, Credential}
 
       def list_users(tenant) do
         User
