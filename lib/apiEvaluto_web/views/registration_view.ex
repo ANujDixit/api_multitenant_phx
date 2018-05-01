@@ -5,4 +5,10 @@ defmodule ApiEvalutoWeb.RegistrationView do
     %{jwt: jwt}
   end
   
+  def render("verify_tenant.json", %{tenant: tenant}) do
+      %{
+          verified: tenant.verified
+      }   
+  end
+  
 end

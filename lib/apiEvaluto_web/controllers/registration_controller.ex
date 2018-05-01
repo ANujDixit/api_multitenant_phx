@@ -18,7 +18,34 @@ defmodule ApiEvalutoWeb.RegistrationController do
                                                         credential.email, 
                                                         tenant_verification_url)                                                   
             render(conn, "jwt.json", jwt: token)
+            
+    else 
+      {:error, changeset} -> {:error, changeset}
+      _ -> {:error, :guardian_token_issue} 
     end    
+  end
+  
+  def verify_tenant(conn, %{"token" => token}) do
+    with {:ok, identifier}                      <-  Token.verify_new_account_token(token),
+         [tenant_id, user_id]                   <-  String.split(identifier, "_"),
+         %Tenant{} = tenant                     <-  Accounts.get_tenant!(tenant_id),
+         %User{} = user                         <-  Accounts.get_user!(tenant, user_id ) do
+         case Accounts.verify_tenant(tenant, user) do
+          {:ok, tenant} ->
+            conn
+            |> put_status(200)
+            |> render("verify_tenant.json", tenant: tenant)
+          {:error, _} ->
+            conn
+            |> put_status(:not_found)
+            |> json(%{error: "invalid token"})
+         end
+    else
+      _token_issue  ->  {:error, :token_issue}
+      _split_issue  ->  {:error, :token_issue}
+      _tenant_issue ->  {:error, :tenant_issue}
+      _user_issue   ->  {:error, :user_issue}
+    end
   end
   
 end

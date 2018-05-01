@@ -11,6 +11,12 @@ defmodule ApiEvalutoWeb.FallbackController do
     |> put_status(:unprocessable_entity)
     |> render(ApiEvalutoWeb.ChangesetView, "error.json", changeset: changeset)
   end
+  
+  def call(conn, {:error, :guardian_token_issue}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> json(%{error: "Guardian token generation issue"})
+  end
 
   def call(conn, {:error, :not_found}) do
     conn
@@ -28,6 +34,24 @@ defmodule ApiEvalutoWeb.FallbackController do
     conn
     |> put_status(:unauthorized)
     |> json(%{error: "Tenant Not found"})
+  end
+  
+  def call(conn, {:error, :token_issue}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> json(%{data: %{error: "Incorrect token", verified: false}})
+  end
+  
+  def call(conn, {:error, :tenant_issue}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> json(%{error: "Incorrect tenant", verified: false})
+  end
+  
+  def call(conn, {:error, :user_issue}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> json(%{error: "Incorrect user", verified: false})
   end
   
 end

@@ -3,7 +3,7 @@ defmodule ApiEvaluto.Accounts.Access.Tenant do
     quote do
       import Ecto.Query, warn: false
       alias ApiEvaluto.Repo             
-      alias ApiEvaluto.Accounts.Tenant
+      alias ApiEvaluto.Accounts.{Tenant, User}
 
       def list_tenants do
         Repo.all(Tenant)
@@ -30,7 +30,18 @@ defmodule ApiEvaluto.Accounts.Access.Tenant do
       def delete_tenant(%Tenant{} = tenant) do
         Repo.delete(tenant)
       end     
-              
-    end
+      
+      def verify_tenant(%Tenant{} = tenant, %User{} = user) do
+          Ecto.Multi.new()
+          |> Ecto.Multi.update(:tenant, Tenant.changeset(tenant, %{verified: true}))
+          |> Ecto.Multi.update(:user, User.changeset(user, %{email_verified: true}))
+          |> Repo.transaction()
+          |>  case do
+                {:ok, %{tenant: tenant, user: user}} -> {:ok, tenant}
+                {:error, op, res, others} -> {:error, op}
+              end
+      end
+      
+    end 
   end
 end

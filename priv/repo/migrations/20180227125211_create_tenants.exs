@@ -7,6 +7,8 @@ defmodule ApiEvaluto.Repo.Migrations.CreateTenants do
       add :name, :string
       add :slug, :string
       add :code, :string
+      add :verified, :boolean, default: false, null: false
+      add :active, :boolean,  default: false, null: true
 
       timestamps()
     end

@@ -8,6 +8,8 @@ defmodule ApiEvaluto.Accounts.Tenant do
     field :code, :string
     field :name, :string
     field :slug, :string
+    field :verified, :boolean
+    field :active, :boolean
     
     has_many :users, User
     has_many :groups, Group
@@ -23,7 +25,7 @@ defmodule ApiEvaluto.Accounts.Tenant do
 
   def changeset(tenant, attrs) do
     tenant
-    |> cast(attrs, [:name])
+    |> cast(attrs, [:name, :verified, :active])
     |> validate_required([:name])
     |> slugify_name() 
     |> auto_populate_company_code()
