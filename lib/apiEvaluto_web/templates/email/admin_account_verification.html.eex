@@ -5,6 +5,7 @@
   <div class="card-body">
     <h5 class="card-title font-weight-bold">Confirm Account by clicking below!</h5>
     <p><%= @name %></p>
+    <p><%= @tenant_name %></p>
     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
     <a href= <%= @verification_url %> class="btn btn-primary">Confirm Email</a>
   </div>

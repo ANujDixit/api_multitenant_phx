@@ -9,8 +9,8 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
         changeset = Registration.changeset(%Registration{}, attrs)  
         if changeset.valid? do
           case Repo.transaction(to_multi(attrs)) do
-            {:ok, %{tenant: tenant, user: user}} ->
-              {:ok, tenant, user}
+            {:ok, %{tenant: tenant, user: user, credential: credential}} ->
+              {:ok, tenant, user, credential}
             {:error, _operation, repo_changeset, _changes} ->
               changeset = %{copy_errors(repo_changeset, changeset) | action: :insert}
               {:error, changeset}
