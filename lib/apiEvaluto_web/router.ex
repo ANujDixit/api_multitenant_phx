@@ -32,8 +32,7 @@ defmodule ApiEvalutoWeb.Router do
     
     resources "/credentials", CredentialController, except: [:new, :edit]
     resources "/memberships", MembershipController, except: [:new, :edit]
-    resources "/user_types", UserTypeController, except: [:new, :edit]
-    resources "/access_keys", AccessKeyController, except: [:new, :edit]
+    
   end
 
   scope "/api/admin", ApiEvalutoWeb.Admin do
@@ -41,6 +40,12 @@ defmodule ApiEvalutoWeb.Router do
     
     resources "/questions", QuestionController, except: [:new, :edit]
     resources "/groups", GroupController, except: [:new, :edit]
+    
+    resources "/user_types", UserTypeController, except: [:new, :edit]
+    resources "/access_keys", AccessKeyController, except: [:new, :edit]
+    resources "/action_groups", ActionGroupController, except: [:new, :edit]
+    resources "/actions", ActionController, except: [:new, :edit]
+    resources "/abilities", AbilityController, except: [:new, :edit]
 
  
   end

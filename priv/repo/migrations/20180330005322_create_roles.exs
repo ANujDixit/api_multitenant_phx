@@ -1,8 +1,8 @@
-defmodule ApiEvaluto.Repo.Migrations.CreateUserTypes do
+defmodule ApiEvaluto.Repo.Migrations.CreateRoles do
   use Ecto.Migration
 
   def change do
-    create table(:user_types, primary_key: false) do
+    create table(:roles, primary_key: false) do
       add :id, :binary_id, primary_key: true       
       add :name, :string     
       add :security_level, :integer, default: 0
@@ -11,7 +11,7 @@ defmodule ApiEvaluto.Repo.Migrations.CreateUserTypes do
       timestamps()
     end
 
-    create index(:user_types, [:tenant_id])
-    create unique_index(:user_types, [:tenant_id, :name], name: :tenant_user_type)
+    create index(:roles, [:tenant_id])
+    create unique_index(:roles, [:tenant_id, :name], name: :tenant_role)
   end
 end

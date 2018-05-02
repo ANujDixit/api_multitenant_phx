@@ -5,7 +5,7 @@ defmodule ApiEvaluto.Repo.Migrations.CreateAccessKeys do
     create table(:access_keys, primary_key: false) do
       add :id, :binary_id, primary_key: true 
       add :name, :string
-      add :user_type_id, references(:user_types, on_delete: :delete_all, type: :binary_id)
+      add :role_id, references(:roles, on_delete: :delete_all, type: :binary_id)
       add :tenant_id, references(:tenants, on_delete: :delete_all, type: :binary_id), null: false
 
       timestamps()

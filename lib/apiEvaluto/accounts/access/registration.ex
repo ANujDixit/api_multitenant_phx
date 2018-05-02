@@ -3,7 +3,8 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
     quote do
       import Ecto.Query, warn: false
       alias ApiEvaluto.Repo        
-      alias ApiEvaluto.Accounts.{Registration, Tenant, Group, User, Credential, Membership, UserType}
+      alias ApiEvaluto.Accounts.{Registration, Tenant, Group, User, Credential, Membership}
+      alias ApiEvaluto.Authorization.Role
 
       def register(attrs \\ %{}) do
         changeset = Registration.changeset(%Registration{}, attrs)  

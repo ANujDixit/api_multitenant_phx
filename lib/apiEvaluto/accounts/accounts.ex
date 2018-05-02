@@ -6,6 +6,4 @@ defmodule ApiEvaluto.Accounts do
   use ApiEvaluto.Accounts.Access.Membership
   use ApiEvaluto.Accounts.Access.Registration
   use ApiEvaluto.Accounts.Access.Auth
-  use ApiEvaluto.Accounts.Access.UserType
-  use ApiEvaluto.Accounts.Access.AccessKey  
 end
