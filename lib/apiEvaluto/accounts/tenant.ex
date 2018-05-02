@@ -1,7 +1,8 @@
 defmodule ApiEvaluto.Accounts.Tenant do
   use ApiEvaluto.Schema  
   alias ApiEvaluto.Repo
-  alias ApiEvaluto.Accounts.{Tenant, User, Group, Membership, Credential, UserType, AccessKey}
+  alias ApiEvaluto.Accounts.{Tenant, User, Group, Membership, Credential}
+  alias ApiEvaluto.Authorization.{Role, AccessKey}
   alias ApiEvaluto.Library.Question
   
   schema "tenants" do
@@ -15,7 +16,7 @@ defmodule ApiEvaluto.Accounts.Tenant do
     has_many :groups, Group
     has_many :memberships, Membership
     has_many :credentials, Credential
-    has_many :user_types, UserType
+    has_many :roles, Role
     has_many :access_keys, AccessKey
     
     has_many :questions, Question

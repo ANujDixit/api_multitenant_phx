@@ -25,7 +25,7 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
       defp to_multi(attrs) do
         Ecto.Multi.new()
           |> Ecto.Multi.insert(:tenant, tenant_changeset(attrs))
-          |> Ecto.Multi.run(:user_type, fn changes -> Repo.insert user_type_changeset(changes) end)
+          |> Ecto.Multi.run(:role, fn changes -> Repo.insert role_changeset(changes) end)
           |> Ecto.Multi.run(:group, fn changes -> Repo.insert group_changeset(changes) end)
           |> Ecto.Multi.run(:user,  fn changes -> Repo.insert user_changeset(attrs, changes) end)
           |> Ecto.Multi.run(:credential, fn changes -> Repo.insert credential_changeset(attrs, changes) end)
@@ -36,9 +36,9 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
         Tenant.changeset(%Tenant{}, %{name: tenant_name} )
       end
 
-      defp user_type_changeset(changes) do
+      defp role_changeset(changes) do
         changes.tenant
-        |> Ecto.build_assoc(:user_types)
+        |> Ecto.build_assoc(:roles)
         |> UserType.changeset(%{name: "Admin", security_level: 100})
       end
 

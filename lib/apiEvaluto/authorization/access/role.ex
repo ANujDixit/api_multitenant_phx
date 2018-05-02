@@ -18,15 +18,15 @@ defmodule ApiEvaluto.Authorization.Access.Role do
             |> Repo.get!(id)
         end    
 
-        def create_user_type(tenant, attrs \\ %{}) do
+        def create_role(tenant, attrs \\ %{}) do
             Ecto.build_assoc(tenant, :roles)
             |> Role.changeset(attrs)
             |> Repo.insert()
         end
     
-        def update_role(%Role{} = user_type, attrs) do
-            user_type
-            |> UserType.changeset(attrs)
+        def update_role(%Role{} = role, attrs) do
+            role
+            |> Role.changeset(attrs)
             |> Repo.update()           
         end
 

@@ -41,7 +41,7 @@ defmodule ApiEvalutoWeb.Router do
     resources "/questions", QuestionController, except: [:new, :edit]
     resources "/groups", GroupController, except: [:new, :edit]
     
-    resources "/user_types", UserTypeController, except: [:new, :edit]
+    resources "/roles", RoleController, except: [:new, :edit]
     resources "/access_keys", AccessKeyController, except: [:new, :edit]
     resources "/action_groups", ActionGroupController, except: [:new, :edit]
     resources "/actions", ActionController, except: [:new, :edit]

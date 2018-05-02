@@ -1,9 +1,9 @@
-defmodule ApiEvaluto.Accounts.Access.AccessKey do
+defmodule ApiEvaluto.Authorization.Access.AccessKey do
     defmacro __using__(_) do
       quote do
         import Ecto.Query, warn: false
         alias ApiEvaluto.Repo             
-        alias ApiEvaluto.Accounts.AccessKey
+        alias ApiEvaluto.Authorization.AccessKey
        
         def list_access_keys(tenant) do         
             AccessKey

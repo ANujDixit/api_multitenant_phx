@@ -1,8 +1,8 @@
-defmodule ApiEvaluto.Accounts.UserType do
+defmodule ApiEvaluto.Authorization.Role do
   use ApiEvaluto.Schema     
   alias ApiEvaluto.Accounts.User
 
-  schema "user_types" do    
+  schema "roles" do    
     field :name, :string   
     field :security_level, :integer 
     
@@ -12,8 +12,8 @@ defmodule ApiEvaluto.Accounts.UserType do
     timestamps()
   end
 
-  def changeset(user_type, attrs) do
-    user_type
+  def changeset(role, attrs) do
+    role
     |> cast(attrs, [:name, :security_level])
     |> validate_required([:name, :security_level])
     |> unique_constraint(:name)

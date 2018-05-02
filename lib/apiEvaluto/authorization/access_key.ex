@@ -1,11 +1,11 @@
-defmodule ApiEvaluto.Accounts.AccessKey do
+defmodule ApiEvaluto.Authorization.AccessKey do
   use ApiEvaluto.Schema  
-  alias ApiEvaluto.Accounts.UserType
+  alias ApiEvaluto.Authorization.Role
 
   schema "access_keys" do
     field :name, :string
     
-    belongs_to :user_type, UserType, foreign_key: :user_type_id, type: :binary_id
+    belongs_to :user_type, Role, foreign_key: :user_type_id, type: :binary_id
     belongs_to :tenant, Tenant, foreign_key: :tenant_id, type: :binary_id
 
     timestamps()

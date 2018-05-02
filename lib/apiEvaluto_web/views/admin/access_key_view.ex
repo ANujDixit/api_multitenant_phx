@@ -1,6 +1,6 @@
-defmodule ApiEvalutoWeb.AccessKeyView do
+defmodule ApiEvalutoWeb.Admin.AccessKeyView do
   use ApiEvalutoWeb, :view
-  alias ApiEvalutoWeb.AccessKeyView
+  alias ApiEvalutoWeb.Admin.AccessKeyView
 
   def render("index.json", %{access_keys: access_keys}) do
     %{data: render_many(access_keys, AccessKeyView, "access_key.json")}
