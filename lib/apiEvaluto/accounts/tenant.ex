@@ -3,7 +3,8 @@ defmodule ApiEvaluto.Accounts.Tenant do
   alias ApiEvaluto.Repo
   alias ApiEvaluto.Accounts.{Tenant, User, Group, Membership, Credential}
   alias ApiEvaluto.Authorization.{Role, AccessKey}
-  alias ApiEvaluto.Library.Question
+  alias ApiEvaluto.Library.{Question, Choice}
+  alias ApiEvaluto.QuizAPP.{Test}
   
   schema "tenants" do
     field :code, :string
@@ -20,6 +21,9 @@ defmodule ApiEvaluto.Accounts.Tenant do
     has_many :access_keys, AccessKey
     
     has_many :questions, Question
+    has_many :choices, Choice
+    
+    has_many :tests, Test
 
     timestamps()
   end

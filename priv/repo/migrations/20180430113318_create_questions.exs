@@ -7,6 +7,7 @@ defmodule ApiEvaluto.Repo.Migrations.CreateQuestions do
       add :title, :text
       add :type, :integer
       add :explanation, :text
+      
       add :tenant_id, references(:tenants, on_delete: :delete_all, type: :binary_id ), null: false
       add :created_by_id, references(:users, on_delete: :nothing, type: :binary_id )
       add :updated_by_id, references(:users, on_delete: :nothing, type: :binary_id )

@@ -46,6 +46,7 @@ defmodule ApiEvalutoWeb.Router do
     resources "/action_groups", ActionGroupController, except: [:new, :edit]
     resources "/actions", ActionController, except: [:new, :edit]
     resources "/abilities", AbilityController, except: [:new, :edit]
+    resources "/tests", TestController, except: [:new, :edit]
 
  
   end
