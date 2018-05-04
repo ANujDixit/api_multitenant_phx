@@ -311,65 +311,65 @@ defmodule ApiEvaluto.AccountsTest do
     end
   end
 
-  describe "user_types" do
-    alias ApiEvaluto.Accounts.UserType
+  describe "roles" do
+    alias ApiEvaluto.Accounts.Role
 
     @valid_attrs %{actions: [], name: "some name"}
     @update_attrs %{actions: [], name: "some updated name"}
     @invalid_attrs %{actions: nil, name: nil}
 
-    def user_type_fixture(attrs \\ %{}) do
-      {:ok, user_type} =
+    def role_fixture(attrs \\ %{}) do
+      {:ok, role} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Accounts.create_user_type()
+        |> Accounts.create_role()
 
-      user_type
+      role
     end
 
-    test "list_user_types/0 returns all user_types" do
-      user_type = user_type_fixture()
-      assert Accounts.list_user_types() == [user_type]
+    test "list_roles/0 returns all roles" do
+      role = role_fixture()
+      assert Accounts.list_roles() == [role]
     end
 
-    test "get_user_type!/1 returns the user_type with given id" do
-      user_type = user_type_fixture()
-      assert Accounts.get_user_type!(user_type.id) == user_type
+    test "get_role!/1 returns the role with given id" do
+      role = role_fixture()
+      assert Accounts.get_role!(role.id) == role
     end
 
-    test "create_user_type/1 with valid data creates a user_type" do
-      assert {:ok, %UserType{} = user_type} = Accounts.create_user_type(@valid_attrs)
-      assert user_type.actions == []
-      assert user_type.name == "some name"
+    test "create_role/1 with valid data creates a role" do
+      assert {:ok, %Role{} = role} = Accounts.create_role(@valid_attrs)
+      assert role.actions == []
+      assert role.name == "some name"
     end
 
-    test "create_user_type/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Accounts.create_user_type(@invalid_attrs)
+    test "create_role/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Accounts.create_role(@invalid_attrs)
     end
 
-    test "update_user_type/2 with valid data updates the user_type" do
-      user_type = user_type_fixture()
-      assert {:ok, user_type} = Accounts.update_user_type(user_type, @update_attrs)
-      assert %UserType{} = user_type
-      assert user_type.actions == []
-      assert user_type.name == "some updated name"
+    test "update_role/2 with valid data updates the role" do
+      role = role_fixture()
+      assert {:ok, role} = Accounts.update_role(role, @update_attrs)
+      assert %Role{} = role
+      assert role.actions == []
+      assert role.name == "some updated name"
     end
 
-    test "update_user_type/2 with invalid data returns error changeset" do
-      user_type = user_type_fixture()
-      assert {:error, %Ecto.Changeset{}} = Accounts.update_user_type(user_type, @invalid_attrs)
-      assert user_type == Accounts.get_user_type!(user_type.id)
+    test "update_role/2 with invalid data returns error changeset" do
+      role = role_fixture()
+      assert {:error, %Ecto.Changeset{}} = Accounts.update_role(role, @invalid_attrs)
+      assert role == Accounts.get_role!(role.id)
     end
 
-    test "delete_user_type/1 deletes the user_type" do
-      user_type = user_type_fixture()
-      assert {:ok, %UserType{}} = Accounts.delete_user_type(user_type)
-      assert_raise Ecto.NoResultsError, fn -> Accounts.get_user_type!(user_type.id) end
+    test "delete_role/1 deletes the role" do
+      role = role_fixture()
+      assert {:ok, %Role{}} = Accounts.delete_role(role)
+      assert_raise Ecto.NoResultsError, fn -> Accounts.get_role!(role.id) end
     end
 
-    test "change_user_type/1 returns a user_type changeset" do
-      user_type = user_type_fixture()
-      assert %Ecto.Changeset{} = Accounts.change_user_type(user_type)
+    test "change_role/1 returns a role changeset" do
+      role = role_fixture()
+      assert %Ecto.Changeset{} = Accounts.change_role(role)
     end
   end
 

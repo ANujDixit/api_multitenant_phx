@@ -3,7 +3,8 @@ defmodule ApiEvaluto.Accounts.Access.User do
     quote do
       import Ecto.Query, warn: false
       alias ApiEvaluto.Repo            
-      alias ApiEvaluto.Accounts.{Tenant, User, UserType, Credential}
+      alias ApiEvaluto.Accounts.{Tenant, User, Credential}
+      alias ApiEvaluto.Authorization.Role
 
       def list_users(tenant) do
         User
@@ -18,12 +19,12 @@ defmodule ApiEvaluto.Accounts.Access.User do
         |> Repo.get!(id)
       end     
       
-      def load_user_tenant_user_type(user_id) do   
+      def load_user_tenant_role(user_id) do   
         user_query = 
           from u in User, where: u.id == ^user_id, 
           join: t in Tenant, on: u.tenant_id == t.id,
-          join: ut in UserType, on: u.user_type_id == ut.id,
-          select: %{user: u, tenant: t, user_type: ut.name}
+          join: r in Role, on: u.role_id == r.id,
+          select: %{user: u, tenant: t, role: r.name, tenant_code: t.code}
         Repo.one(user_query)  
       end
       
@@ -48,10 +49,10 @@ defmodule ApiEvaluto.Accounts.Access.User do
         user = 
           User                                   
           |> where([u], u.tenant_id == ^tenant.id and u.id == ^user.id) 
-          |> preload(:user_type)
+          |> preload(:role)
           |> Repo.one() 
 
-        user.user_type.name == "Admin"             
+        user.role.name == "Admin"             
       end        
     end
   end

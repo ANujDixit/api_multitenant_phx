@@ -14,9 +14,9 @@ defmodule ApiEvalutoWeb.RegistrationController do
           
             tenant_verification_url = registration_url(conn, :verify_tenant, token: Token.generate_new_account_token(user))
             Notifications.send_admin_account_verification_email("#{user.first_name} #{user.last_name}", 
-                                                        tenant.name,
-                                                        credential.email, 
-                                                        tenant_verification_url)                                                   
+                                                                 tenant.name,
+                                                                 credential.email, 
+                                                                 tenant_verification_url)                                                   
             render(conn, "jwt.json", jwt: token)
             
     else 
@@ -26,10 +26,7 @@ defmodule ApiEvalutoWeb.RegistrationController do
   end
   
   def verify_tenant(conn, %{"token" => token}) do
-    with {:ok, identifier}                      <-  Token.verify_new_account_token(token),
-         [tenant_id, user_id]                   <-  String.split(identifier, "_"),
-         %Tenant{} = tenant                     <-  Accounts.get_tenant!(tenant_id),
-         %User{} = user                         <-  Accounts.get_user!(tenant, user_id ) do
+    with {:ok, %Tenant{} = tenant, %User{} = user}  <- Token.verify_new_account_token(token) do
          case Accounts.verify_tenant(tenant, user) do
           {:ok, tenant} ->
             conn
@@ -40,11 +37,6 @@ defmodule ApiEvalutoWeb.RegistrationController do
             |> put_status(:not_found)
             |> json(%{error: "invalid token"})
          end
-    else
-      _token_issue  ->  {:error, :token_issue}
-      _split_issue  ->  {:error, :token_issue}
-      _tenant_issue ->  {:error, :tenant_issue}
-      _user_issue   ->  {:error, :user_issue}
     end
   end
   

@@ -32,26 +32,14 @@ defmodule ApiEvalutoWeb.FallbackController do
 
   def call(conn, {:error, :tenant_not_found}) do
     conn
-    |> put_status(:unauthorized)
+    |> put_status(:not_found)
     |> json(%{error: "Tenant Not found"})
   end
   
-  def call(conn, {:error, :token_issue}) do
+  def call(conn, {:error, {_, msg}}) do
     conn
-    |> put_status(:unprocessable_entity)
-    |> json(%{data: %{error: "Incorrect token", verified: false}})
-  end
-  
-  def call(conn, {:error, :tenant_issue}) do
-    conn
-    |> put_status(:unprocessable_entity)
-    |> json(%{error: "Incorrect tenant", verified: false})
-  end
-  
-  def call(conn, {:error, :user_issue}) do
-    conn
-    |> put_status(:unprocessable_entity)
-    |> json(%{error: "Incorrect user", verified: false})
+    |> put_status(:not_found)
+    |> json(%{error: msg})
   end
   
 end

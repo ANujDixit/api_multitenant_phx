@@ -5,7 +5,7 @@ defmodule ApiEvaluto.Authorization.AccessKey do
   schema "access_keys" do
     field :name, :string
     
-    belongs_to :user_type, Role, foreign_key: :user_type_id, type: :binary_id
+    belongs_to :role, Role, foreign_key: :role_id, type: :binary_id
     belongs_to :tenant, Tenant, foreign_key: :tenant_id, type: :binary_id
 
     timestamps()

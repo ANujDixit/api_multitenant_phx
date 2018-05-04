@@ -11,7 +11,7 @@ defmodule ApiEvaluto.Repo.Migrations.CreateAccessKeys do
       timestamps()
     end
 
-    create index(:access_keys, [:user_type_id])
+    create index(:access_keys, [:role_id])
     create index(:access_keys, [:tenant_id])
   end
 end

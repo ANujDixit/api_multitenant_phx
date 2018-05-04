@@ -1,6 +1,6 @@
 defmodule ApiEvaluto.Accounts.User do
   use ApiEvaluto.Schema  
-  alias ApiEvaluto.Accounts.UserType
+  alias ApiEvaluto.Authorization.Role
   
   schema "users" do
     field :first_name, :string
@@ -8,7 +8,7 @@ defmodule ApiEvaluto.Accounts.User do
     field :email_verified, :boolean
     field :active, :boolean
     
-    belongs_to :user_type, UserType, foreign_key: :user_type_id, type: :binary_id
+    belongs_to :role, Role, foreign_key: :role_id, type: :binary_id
     belongs_to :tenant, Tenant, foreign_key: :tenant_id, type: :binary_id
 
     timestamps()

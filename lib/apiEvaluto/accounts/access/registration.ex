@@ -39,7 +39,7 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
       defp role_changeset(changes) do
         changes.tenant
         |> Ecto.build_assoc(:roles)
-        |> UserType.changeset(%{name: "Admin", security_level: 100})
+        |> Role.changeset(%{name: "Admin", security_level: 100})
       end
 
       defp group_changeset(changes) do
@@ -52,7 +52,7 @@ defmodule ApiEvaluto.Accounts.Access.Registration do
         changes.tenant
         |> Ecto.build_assoc(:users) 
         |> Ecto.Changeset.change()
-        |> Ecto.Changeset.put_assoc(:user_type, changes.user_type)
+        |> Ecto.Changeset.put_assoc(:role, changes.role)
         |> User.changeset(%{first_name: first_name, last_name: last_name})
       end
 
