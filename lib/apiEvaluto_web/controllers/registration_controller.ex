@@ -8,11 +8,12 @@ defmodule ApiEvalutoWeb.RegistrationController do
 
   action_fallback ApiEvalutoWeb.FallbackController 
 
-  def create(conn, %{"registration" => registration_params}) do
-    with  {:ok, %Tenant{} = tenant, %User{} = user, %Credential{} = credential} <- Accounts.register(registration_params),
+  def create(conn, %{"signup" => signup_params}) do
+    with  {:ok, %Tenant{} = tenant, %User{} = user, %Credential{} = credential} <- Accounts.register(signup_params),
           {:ok, token, _claims} <- Guardian.encode_and_sign(user, %{tenant_slug: tenant.slug, tenant_code: tenant.code}) do
           
             tenant_verification_url = registration_url(conn, :verify_tenant, token: Token.generate_new_account_token(user))
+                                      |> String.replace("8080/api", "4200/admin-portal")
             Notifications.send_admin_account_verification_email("#{user.first_name} #{user.last_name}", 
                                                                  tenant.name,
                                                                  credential.email, 

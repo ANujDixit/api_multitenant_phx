@@ -35,6 +35,8 @@ defmodule ApiEvalutoWeb.Endpoint do
     store: :cookie,
     key: "_apiEvaluto_key",
     signing_salt: "x9OwzoEv"
+  
+  plug CORSPlug  
 
   plug ApiEvalutoWeb.Router
 

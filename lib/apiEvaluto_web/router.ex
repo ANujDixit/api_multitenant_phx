@@ -18,9 +18,9 @@ defmodule ApiEvalutoWeb.Router do
   scope "/api", ApiEvalutoWeb do
     pipe_through :api
     
-    post "/register", RegistrationController, :create
+    post "/signup", RegistrationController, :create
     get "/verify-tenants", RegistrationController, :verify_tenant
-    post "/authenticate", AuthenticationController, :create        
+    post "/signin", AuthenticationController, :create        
     
   end
   

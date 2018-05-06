@@ -1,12 +1,11 @@
-<div class="card">
-  <div class="card-header">
-   <h4 class="card-title">Welcome to Evaluto !</h4>
-  </div>
-  <div class="card-body">
-    <h5 class="card-title font-weight-bold">Confirm Account by clicking below!</h5>
-    <p><%= @name %></p>
-    <p><%= @tenant_name %></p>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href= <%= @verification_url %> class="btn btn-primary">Confirm Email</a>
+<div class="card"> 
+  <div class="container">   
+    <p>Hello <%= @name%></p> 
+    <p>Follow this link to verify your email account</p>
+    <a href= <%= @verification_url %>><%= @verification_url %></a>
+    <br><br>
+    <p> If you didn't ask to verify this address, you can ignore this email</p>
+    <p>Thanks,</p>
+    <p>Evaluto Team</p>
   </div>
 </div>
