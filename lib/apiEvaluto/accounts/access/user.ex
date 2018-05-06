@@ -16,6 +16,7 @@ defmodule ApiEvaluto.Accounts.Access.User do
       def get_user!(tenant, id) do
         User
         |> where([u], u.tenant_id == ^tenant.id)
+        |> preload(:role)
         |> Repo.get!(id)
       end     
       

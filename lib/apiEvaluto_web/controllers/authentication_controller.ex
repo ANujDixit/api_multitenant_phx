@@ -6,7 +6,7 @@ defmodule ApiEvalutoWeb.AuthenticationController do
 
   action_fallback ApiEvalutoWeb.FallbackController
 
-  def create(conn, %{"email" => email, "password" => password, "tenant_code" => code}) do
+  def create(conn, %{"signin" => %{"email" => email, "password" => password, "tenant_code" => code} }) do
     with %Tenant{} = tenant <- Accounts.get_tenant_by_code(code) do    
       case Accounts.token_sign_in(tenant, email, password) do
         {:ok, token, _claims} ->

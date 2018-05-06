@@ -12,7 +12,10 @@ defmodule ApiEvaluto.Accounts.Access.Auth do
       def token_sign_in(tenant, email, password) do
         case email_password_auth(tenant, email, password) do
           {:ok, user} ->  
-            Guardian.encode_and_sign(user, %{tenant_slug: tenant.slug, tenant_code: tenant.code})
+            Guardian.encode_and_sign(user, %{tenant_slug: tenant.slug, tenant_code: tenant.code, 
+                                             user_id: user.id, user_first_name: user.first_name,                                              
+                                             user_last_name: user.last_name, user_email: email, 
+                                             user_role: user.role.name, tenant_name: tenant.name})
           _ ->
             {:error, :unauthorized}
         end
