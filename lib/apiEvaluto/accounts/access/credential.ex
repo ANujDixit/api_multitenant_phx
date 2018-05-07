@@ -11,6 +11,13 @@ defmodule ApiEvaluto.Accounts.Access.Credential do
 
       def get_credential!(id), do: Repo.get!(Credential, id)
 
+      def get_credential_by_email(tenant, email) do
+        Credential
+        |> where([cr], cr.tenant_id == ^tenant.id)
+        |> preload([user: :role])
+        |> Repo.get_by(email: email)
+      end
+
       def create_credential(attrs \\ %{}) do
         %Credential{}
         |> Credential.changeset(attrs)

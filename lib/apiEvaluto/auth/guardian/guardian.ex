@@ -11,13 +11,14 @@ defmodule ApiEvaluto.Guardian do
       {:error, :reason_for_error}
     end
   
-    def resource_from_claims(claims) do
+    def resource_from_claims(claims) do    
 
-      tenant_code = claims["tenant_code"]
       user_id = claims["sub"] 
-      
+      tenant_id = claims["tenant_id"]
+      tenant_code = claims["tenant_code"]
+
       resource =  
-        case Accounts.load_user_tenant_role(user_id) do
+        case Accounts.load_user_tenant_role(tenant_id, user_id) do
           %{user: u, tenant: t, role: r, tenant_code: code} when not is_nil(u) and 
                                                                  not is_nil(t) and 
                                                                  not is_nil(r) and 

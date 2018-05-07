@@ -20,15 +20,14 @@ defmodule ApiEvaluto.Accounts.Access.User do
         |> Repo.get!(id)
       end     
       
-      def load_user_tenant_role(user_id) do   
+      def load_user_tenant_role(tenant_id, user_id) do   
         user_query = 
           from u in User, where: u.id == ^user_id, 
-          join: t in Tenant, on: u.tenant_id == t.id,
-          join: r in Role, on: u.role_id == r.id,
+          join: t in Tenant, on: t.id == ^tenant_id,
+          join: r in Role, on: r.id == u.role_id,
           select: %{user: u, tenant: t, role: r.name, tenant_code: t.code}
         Repo.one(user_query)  
-      end
-      
+      end      
 
       def create_user(tenant, attrs \\ %{}) do
         Ecto.build_assoc(tenant, :users)

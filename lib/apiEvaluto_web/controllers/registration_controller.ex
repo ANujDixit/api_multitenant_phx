@@ -1,7 +1,6 @@
 defmodule ApiEvalutoWeb.RegistrationController do
   use ApiEvalutoWeb, :controller
-
-  alias ApiEvaluto.Guardian 
+  
   alias ApiEvaluto.{Accounts, Notifications}
   alias ApiEvaluto.Accounts.{Tenant, User, Credential}  
   alias ApiEvaluto.Auth.Token
