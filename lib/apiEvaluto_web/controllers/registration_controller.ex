@@ -21,7 +21,7 @@ defmodule ApiEvalutoWeb.RegistrationController do
                                                                  tenant_verification_url)                                                   
             conn
             |> put_status(:created)      
-            |> render("show.json", registration_success_status: true)            
+            |> render("show.json", message: "Account Creation", title: "Success") 
     else 
       {:error, changeset} -> {:error, changeset}
     end    
