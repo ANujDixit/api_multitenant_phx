@@ -1,6 +1,7 @@
 defmodule ApiEvaluto.Accounts.User do
   use ApiEvaluto.Schema  
-  alias ApiEvaluto.Authorization.{Role, Credential}
+  alias ApiEvaluto.Authorization.{Role}
+  alias ApiEvaluto.Accounts.Credential
   
   schema "users" do
     field :first_name, :string
