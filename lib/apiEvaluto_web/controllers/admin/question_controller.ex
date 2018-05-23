@@ -10,6 +10,7 @@ defmodule ApiEvalutoWeb.Admin.QuestionController do
   end
 
   def create(conn, %{"question" => question_params}, resource) do
+    IO.inspect question_params
     with {:ok, %Question{} = question} <- Library.create_question(resource, question_params) do
       conn
       |> put_status(:created)

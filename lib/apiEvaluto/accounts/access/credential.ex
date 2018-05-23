@@ -16,6 +16,10 @@ defmodule ApiEvaluto.Accounts.Access.Credential do
         |> where([cr], cr.tenant_id == ^tenant.id)
         |> preload([user: :role])
         |> Repo.get_by(email: email)
+        |> case do
+          nil -> {:error, :email_not_found_in_tenant}
+          credential -> credential
+        end
       end
 
       def create_credential(attrs \\ %{}) do

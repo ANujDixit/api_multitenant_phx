@@ -11,7 +11,14 @@ defmodule ApiEvaluto.Accounts.Access.Tenant do
 
       def get_tenant!(id), do: Repo.get!(Tenant, id)
 
-      def get_tenant_by_code(code), do: Repo.get_by(Tenant, code: code)
+      def get_tenant_by_code(code) do
+        Tenant
+        |> Repo.get_by(code: code)
+        |> case do
+          nil -> {:error, :tenant_not_found}
+          tenant -> tenant
+        end
+      end 
 
       def get_tenant_by_slug(slug), do: Repo.get_by(Tenant, slug: slug)     
       

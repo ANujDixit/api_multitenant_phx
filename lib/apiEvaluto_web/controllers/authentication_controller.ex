@@ -20,11 +20,14 @@ defmodule ApiEvalutoWeb.AuthenticationController do
               {:error, {:unauthorized, msg: "Token encode issue"}}
           end        
     else 
-      _ -> dummy_checkpw() 
-           {:error, {:unauthorized, msg: "Tenant not found"}}
-      _ -> dummy_checkpw() 
-           {:error, {:unauthorized, msg: "User not found in Tenant"}}
-      _ -> {:error, {:unauthorized, msg: "Invalid Password"}}     
+      {:error, :tenant_not_found} -> 
+            dummy_checkpw() 
+            {:error, {:unauthorized, msg: "Tenant not found"}}
+      {:error, :email_not_found_in_tenant} -> 
+            dummy_checkpw() 
+            {:error, {:unauthorized, msg: "User not found in Tenant"}}
+      {:error, :invalid_password} -> 
+            {:error, {:unauthorized, msg: "Invalid Password"}}     
     end
   end
   
