@@ -22,7 +22,7 @@ defmodule ApiEvaluto.Library.Question do
     |> cast(attrs, [:title, :type, :explanation])
     |> validate_required([:title, :type])
     |> unique_constraint(:title, name: :tenant_question_title)
-    |> cast_assoc(:choices, with: &ApiEvaluto.Library.Choice.changeset(&1, &2, tenant))
+    |> cast_assoc(:choices, required: false, with: &ApiEvaluto.Library.Choice.changeset(&1, &2, tenant))
   end
   
   def changeset(question, attrs) do    

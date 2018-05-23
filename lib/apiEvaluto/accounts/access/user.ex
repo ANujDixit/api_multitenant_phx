@@ -25,7 +25,7 @@ defmodule ApiEvaluto.Accounts.Access.User do
           from u in User, where: u.id == ^user_id, 
           join: t in Tenant, on: t.id == ^tenant_id,
           join: r in Role, on: r.id == u.role_id,
-          select: %{user: u, tenant: t, role: r.name, tenant_code: t.code}
+          select: %{user: u, tenant: t, role: r.name}
         Repo.one(user_query)  
       end      
 

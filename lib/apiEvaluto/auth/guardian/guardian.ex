@@ -15,15 +15,14 @@ defmodule ApiEvaluto.Guardian do
 
       user_id = claims["sub"] 
       tenant_id = claims["tenant_id"]
-      tenant_code = claims["tenant_code"]
+     
+      
+      IO.inspect claims
 
       resource =  
         case Accounts.load_user_tenant_role(tenant_id, user_id) do
-          %{user: u, tenant: t, role: r, tenant_code: code} when not is_nil(u) and 
-                                                                 not is_nil(t) and 
-                                                                 not is_nil(r) and 
-                                                                 code == tenant_code
-              ->  %{user: u, tenant: t, role: r, tenant_code: code}
+          %{user: u, tenant: t, role: r } when not is_nil(u) and not is_nil(t) and not is_nil(r) 
+              ->  %{user: u, tenant: t, role: r}
             _
               ->  nil        
         end
