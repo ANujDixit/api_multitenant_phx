@@ -21,7 +21,9 @@ defmodule ApiEvalutoWeb.Admin.QuestionView do
   def render("choice.json", %{choice: choice}) do
     %{id: choice.id,
       title: choice.title,
-      seq: choice.seq}
+      seq: choice.seq,
+      is_correct: choice.is_correct
+    }
   end
   
 end

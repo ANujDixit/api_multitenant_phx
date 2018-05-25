@@ -3,21 +3,21 @@ defmodule ApiEvaluto.Library.Access.Question do
     quote do
       import Ecto.Query, warn: false
       alias ApiEvaluto.Repo
-      alias ApiEvaluto.Library.Question
+      alias ApiEvaluto.Library.{Question, Choice}
      
       def list_questions(resource) do
         Question
         |> where([q], q.tenant_id == ^resource.tenant.id)
         |> order_by(desc: :updated_at)
-        |> preload(:choices)
         |> Repo.all()
+        |> Repo.preload([choices: (from c in Choice, order_by: c.seq)])
       end
   
       def get_question!(resource, id) do
         Question
         |> where([q], q.tenant_id == ^resource.tenant.id)
-        |> preload(:choices)
         |> Repo.get!(id)
+        |> Repo.preload([choices: (from c in Choice, order_by: c.seq)])
       end  
 
       def create_question(resource, attrs \\ %{}) do
