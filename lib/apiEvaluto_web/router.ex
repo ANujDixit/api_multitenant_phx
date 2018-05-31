@@ -20,7 +20,8 @@ defmodule ApiEvalutoWeb.Router do
     
     post "/signup", RegistrationController, :create
     get "/verify-tenants", RegistrationController, :verify_tenant
-    post "/signin", AuthenticationController, :create        
+    post "/signin", AuthenticationController, :create   
+    resources "/tenants", TenantController, only: [:index]
     
   end
   

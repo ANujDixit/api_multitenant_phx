@@ -5,6 +5,11 @@ defmodule ApiEvalutoWeb.TenantController do
   alias ApiEvaluto.Accounts.Tenant
 
   action_fallback ApiEvalutoWeb.FallbackController
+  
+  def index(conn, %{"tenant_name" => name} ) do
+    tenants = Accounts.get_tenants_by_name(name) 
+    render(conn, "index.json", tenants: tenants)
+  end
 
   def index(conn, _params) do
     tenants = Accounts.list_tenants()
