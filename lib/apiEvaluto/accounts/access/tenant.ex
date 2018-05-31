@@ -15,6 +15,11 @@ defmodule ApiEvaluto.Accounts.Access.Tenant do
         from(t in Tenant, where: t.name == ^name)
         |> Repo.all()
       end 
+      
+      def get_tenants_by_code(code) do
+        from(t in Tenant, where: t.code == ^code)
+        |> Repo.all()
+      end 
 
       def get_tenant_by_code(code) do
         Tenant

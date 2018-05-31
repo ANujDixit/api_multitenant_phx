@@ -10,6 +10,11 @@ defmodule ApiEvalutoWeb.TenantController do
     tenants = Accounts.get_tenants_by_name(name) 
     render(conn, "index.json", tenants: tenants)
   end
+  
+  def index(conn, %{"tenant_code" => code} ) do
+    tenants = Accounts.get_tenants_by_code(code) 
+    render(conn, "index.json", tenants: tenants)
+  end
 
   def index(conn, _params) do
     tenants = Accounts.list_tenants()
