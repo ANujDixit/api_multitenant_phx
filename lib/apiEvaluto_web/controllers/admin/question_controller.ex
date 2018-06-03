@@ -36,7 +36,9 @@ defmodule ApiEvalutoWeb.Admin.QuestionController do
   def delete(conn, %{"id" => id}, resource) do
     question = Library.get_question!(resource, id)
     with {:ok, %Question{}} <- Library.delete_question(question) do
-      send_resp(conn, :no_content, "")
+      conn
+      |> put_status(:ok)
+      |> json(%{data: %{message: "Deleted Successfully"}})
     end
   end
 end
