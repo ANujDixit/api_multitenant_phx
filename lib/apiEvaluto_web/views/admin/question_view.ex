@@ -22,7 +22,7 @@ defmodule ApiEvalutoWeb.Admin.QuestionView do
     %{id: choice.id,
       title: choice.title,
       seq: choice.seq,
-      is_correct: choice.is_correct
+      is_correct: choice.is_correct    
     }
   end
   

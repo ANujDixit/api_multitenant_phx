@@ -3,10 +3,10 @@ defmodule ApiEvaluto.Library.Question do
   alias ApiEvaluto.Accounts.User
   alias ApiEvaluto.Library.Choice
 
-  schema "questions" do
-    field :explanation, :string
+  schema "questions" do  
     field :title, :string
     field :type, :integer
+    field :explanation, :string
     
     has_many :choices, Choice
     
@@ -24,13 +24,6 @@ defmodule ApiEvaluto.Library.Question do
     |> unique_constraint(:title, name: :tenant_question_title)
     |> cast_assoc(:choices, required: false, with: &ApiEvaluto.Library.Choice.changeset(&1, &2, tenant))
   end
-  
-  def changeset(question, attrs) do    
-    question
-    |> cast(attrs, [:title, :type, :explanation])
-    |> validate_required([:title, :type])
-    |> unique_constraint(:title, name: :tenant_question_title)
-    |> cast_assoc(:choices)
-  end
+
 
 end

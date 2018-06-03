@@ -28,7 +28,7 @@ defmodule ApiEvalutoWeb.Admin.QuestionController do
   def update(conn, %{"id" => id, "question" => question_params}, resource) do
     question = Library.get_question!(resource, id)
 
-    with {:ok, %Question{} = question} <- Library.update_question(question, question_params) do
+    with {:ok, %Question{} = question} <- Library.update_question(resource, question, question_params) do
       render(conn, "show.json", question: question)
     end
   end

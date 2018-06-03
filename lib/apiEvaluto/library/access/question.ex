@@ -17,7 +17,8 @@ defmodule ApiEvaluto.Library.Access.Question do
         Question
         |> where([q], q.tenant_id == ^resource.tenant.id)
         |> Repo.get!(id)
-        |> Repo.preload([choices: (from c in Choice, order_by: c.seq)])
+        |> Repo.preload([choices: (from c in Choice, order_by: c.seq, preload: [:tenant])])
+        |> Repo.preload(:tenant)
       end  
 
       def create_question(resource, attrs \\ %{}) do
@@ -26,9 +27,9 @@ defmodule ApiEvaluto.Library.Access.Question do
         |> Repo.insert()
       end
 
-      def update_question(%Question{} = question, attrs) do
+      def update_question(resource, %Question{} = question, attrs) do
         question
-        |> Question.changeset(attrs)
+        |> Question.changeset(attrs, resource.tenant)
         |> Repo.update()
       end
 
