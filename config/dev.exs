@@ -40,7 +40,7 @@ config :phoenix, :stacktrace_depth, 20
 config :apiEvaluto, ApiEvaluto.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "password",
+  password: "postgres",
   database: "apievaluto_dev",
   hostname: "localhost",
   pool_size: 10

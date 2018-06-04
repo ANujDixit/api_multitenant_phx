@@ -25,6 +25,12 @@ defmodule ApiEvalutoWeb.Router do
     
   end
   
+  scope "/api/superadmin", ApiEvalutoWeb.SuperAdmin do
+    pipe_through :api
+    
+    post "/signin", AuthenticationController, :create   
+  end
+  
   scope "/api/superadmin", ApiEvalutoWeb do
     pipe_through [:api, :jwt_authenticated_admin]
     
