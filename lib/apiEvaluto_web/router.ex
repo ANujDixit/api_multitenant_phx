@@ -14,6 +14,11 @@ defmodule ApiEvalutoWeb.Router do
     plug Guardian.AuthPipeline   
     plug ApiEvaluto.Plug.EnsureAdmin
   end
+  
+  pipeline :jwt_authenticated_super_admin do
+    plug ApiEvaluto.SuperAdmin.Guardian.AuthPipeline  
+    plug ApiEvaluto.Plug.EnsureSuperAdmin
+  end
 
   scope "/api", ApiEvalutoWeb do
     pipe_through :api
@@ -21,7 +26,6 @@ defmodule ApiEvalutoWeb.Router do
     post "/signup", RegistrationController, :create
     get "/verify-tenants", RegistrationController, :verify_tenant
     post "/signin", AuthenticationController, :create   
-    resources "/tenants", TenantController, only: [:index]
     
   end
   
@@ -31,8 +35,8 @@ defmodule ApiEvalutoWeb.Router do
     post "/signin", AuthenticationController, :create   
   end
   
-  scope "/api/superadmin", ApiEvalutoWeb do
-    pipe_through [:api, :jwt_authenticated_admin]
+  scope "/api/superadmin", ApiEvalutoWeb.SuperAdmin do
+    pipe_through [:api, :jwt_authenticated_super_admin]
     
     resources "/tenants", TenantController, except: [:new, :edit]
     resources "/users", UserController, except: [:new, :edit]

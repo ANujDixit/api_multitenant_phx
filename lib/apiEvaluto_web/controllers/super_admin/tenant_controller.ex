@@ -1,4 +1,4 @@
-defmodule ApiEvalutoWeb.TenantController do
+defmodule ApiEvalutoWeb.SuperAdmin.TenantController do
   use ApiEvalutoWeb, :controller
 
   alias ApiEvaluto.Accounts

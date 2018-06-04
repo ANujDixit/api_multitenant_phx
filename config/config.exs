@@ -26,6 +26,10 @@ config :logger, :console,
 config :apiEvaluto, ApiEvaluto.Guardian, 
   issuer: "apiEvaluto",
   secret_key: "0SQc6sR5y59JXt69+pRUXgpUOTJyU+QFl4ef3t3Coc9qAEQxyIeVrRF3bMs8PoNC"  
+  
+config :apiEvaluto, ApiEvaluto.SuperAdmin.Guardian, 
+  issuer: "apiEvaluto",
+  secret_key: "0SQc6sR5y59JXt69+pRUXgpUOTJyU+QFl4ef3t3Coc9qAEQxyIeVrRF3bMs8PoNC"    
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

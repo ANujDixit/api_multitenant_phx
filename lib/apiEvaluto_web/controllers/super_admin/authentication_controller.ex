@@ -10,7 +10,7 @@ defmodule ApiEvalutoWeb.SuperAdmin.AuthenticationController do
 
   def create(conn, %{"signin" => %{"email" => email, "password" => password } }) do
     with %AdminUser{} = admin_user <- Accounts.get_admin_user_by_email(email),
-         {:ok}                     <- Accounts.verify_password(password, admin_user.password_hash) do   
+         {:ok}                     <- Accounts.verify_password(password, admin_user.password_hash) do  
          
           case Guardian.encode_and_sign(admin_user) do
             {:ok, token, _claims} ->

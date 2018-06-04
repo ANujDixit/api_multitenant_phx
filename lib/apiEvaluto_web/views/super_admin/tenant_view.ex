@@ -1,6 +1,6 @@
-defmodule ApiEvalutoWeb.TenantView do
+defmodule ApiEvalutoWeb.SuperAdmin.TenantView do
   use ApiEvalutoWeb, :view
-  alias ApiEvalutoWeb.TenantView
+  alias ApiEvalutoWeb.SuperAdmin.TenantView
 
   def render("index.json", %{tenants: tenants}) do
     %{data: render_many(tenants, TenantView, "tenant.json")}
