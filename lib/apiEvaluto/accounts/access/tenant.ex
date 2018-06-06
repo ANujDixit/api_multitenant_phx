@@ -3,11 +3,24 @@ defmodule ApiEvaluto.Accounts.Access.Tenant do
     quote do
       import Ecto.Query, warn: false
       alias ApiEvaluto.Repo             
-      alias ApiEvaluto.Accounts.{Tenant, User}
+      alias ApiEvaluto.Accounts.{Tenant, User, Credential}
 
       def list_tenants do
         Repo.all(Tenant)
       end
+
+      def list_tenants_with_owner_details do
+        query = from(t in Tenant, 
+                join: u in assoc(t, :users), 
+                join: cr in assoc(u, :credentials),     
+                select: %{id: t.id, name: t.name, code: t.code, active: t.active, created_date: t.inserted_at,
+                          owner_name: fragment("concat(?, ' ', ?)", u.first_name, u.last_name), 
+                          email: cr.email},          
+                order_by: [asc: [t.inserted_at, u.inserted_at]],
+                limit: 1)
+
+        Repo.all(query)     
+      end    
 
       def get_tenant!(id), do: Repo.get!(Tenant, id)
       
